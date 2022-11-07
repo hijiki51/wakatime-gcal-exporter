@@ -27,7 +27,7 @@ export interface DayData {
   range: SummaryRange
 }
 
-export interface GetSummaryResponce {
+export interface GetSummaryResponse {
   data: DayData[]
   cummulative_total: {
     seconds: number
