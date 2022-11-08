@@ -28,7 +28,7 @@ jobs:
           wakatime-api-key: ${{secrets.WAKATIME_API_KEY}}
           google-credential: ${{secrets.GOOGLE_CREDENTIAL}}
           calendar-id: ${{secrets.CALENDAR_ID}}
-          color-id: ${{secrets.COLOR_ID}}
+          color-id: 7
           projects: |
             wakatime-google-exporter
             kadai
