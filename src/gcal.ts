@@ -2,6 +2,7 @@ import {JSONClient} from 'google-auth-library/build/src/auth/googleauth'
 import {formatRFC3339} from 'date-fns'
 import {google} from 'googleapis'
 import {GoogleAuth} from 'google-auth-library'
+import {debug} from '@actions/core'
 
 export const insertToGcal = async (
   auth: GoogleAuth<JSONClient>,
@@ -11,23 +12,27 @@ export const insertToGcal = async (
   start: Date,
   end: Date
 ): Promise<void> => {
-  const calender = google.calendar({version: 'v3', auth})
-  const startDate = formatRFC3339(start)
-  const endDate = formatRFC3339(end)
+  try {
+    const calender = google.calendar({version: 'v3', auth})
+    const startDate = formatRFC3339(start)
+    const endDate = formatRFC3339(end)
 
-  await calender.events.insert({
-    calendarId: calenderId,
-    requestBody: {
-      colorId,
-      summary: title,
-      start: {
-        dateTime: startDate
-      },
-      end: {
-        dateTime: endDate
+    await calender.events.insert({
+      calendarId: calenderId,
+      requestBody: {
+        colorId,
+        summary: title,
+        start: {
+          dateTime: startDate
+        },
+        end: {
+          dateTime: endDate
+        }
       }
-    }
-  })
+    })
+  } catch (error) {
+    if (error instanceof Error) debug(`insert failed: ${error.message}`)
+  }
 }
 
 export const authorize = async (
@@ -43,7 +48,7 @@ export const authorize = async (
     )
     await client.authorize()
 
-    return new GoogleAuth({
+    return new google.auth.GoogleAuth({
       authClient: client
     })
   } catch (error) {
