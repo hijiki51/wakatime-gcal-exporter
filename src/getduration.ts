@@ -22,7 +22,7 @@ export const getDuration = async (
 
   if (!isGetDurationResponse(tp)) {
     error(response.statusText)
-    throw new Error('Invalid response from API')
+    throw new Error(`Invalid response from API:${response.statusText}`)
   }
 
   return tp
