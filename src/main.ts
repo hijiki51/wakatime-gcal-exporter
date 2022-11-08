@@ -8,6 +8,7 @@ import {GetDurationsResponse} from './types/duration'
 async function run(): Promise<void> {
   try {
     const wakatimeAPIKey: string = core.getInput('wakatime-api-key')
+    const wakatimeUserID: string = core.getInput('wakatime-user-id')
     const yesterday: Date = ((today: Date) => {
       today.setDate(today.getDate() - 1)
       return today
@@ -15,6 +16,7 @@ async function run(): Promise<void> {
 
     const durations: GetDurationsResponse = await getDuration(
       wakatimeAPIKey,
+      wakatimeUserID,
       yesterday
     )
 
