@@ -1,7 +1,7 @@
 import {GetDurationsResponse} from './types/duration'
 import fetch from 'node-fetch'
 import {format} from 'date-fns'
-import {error} from '@actions/core'
+import {debug, error} from '@actions/core'
 
 export const getDuration = async (
   api_key: string,
@@ -21,6 +21,7 @@ export const getDuration = async (
   const tp = await response.json()
 
   if (!isGetDurationResponse(tp)) {
+    debug(JSON.stringify(tp))
     error(response.statusText)
     throw new Error(`Invalid response from API:${response.statusText}`)
   }
