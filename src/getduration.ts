@@ -1,12 +1,13 @@
 import {GetDurationsResponse} from './types/duration'
 import fetch from 'node-fetch'
+import {format} from 'date-fns'
 
 export const getDuration = async (
   api_key: string,
-  date: string
+  date: Date
 ): Promise<GetDurationsResponse> => {
   const token = Buffer.from(api_key).toString('base64')
-  const param = new URLSearchParams({date}).toString()
+  const param = new URLSearchParams(format(date, 'yyyy-MM-dd')).toString()
   const response = await fetch(
     `https://wakatime.com/api/v1/users/current/durations?${param}`,
     {

@@ -29,3 +29,14 @@ export const insertToGcal = async (
     }
   })
 }
+
+export const authorize = (content: string): GoogleAuth<JSONClient> => {
+  try {
+    const credential = JSON.parse(content)
+    const client = google.auth.fromJSON(credential)
+
+    return new GoogleAuth({authClient: client})
+  } catch (error) {
+    throw new Error('Invalid credential json')
+  }
+}

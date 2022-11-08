@@ -2,9 +2,18 @@ name: 'wakatime-gcal-exporter'
 description: 'Sync wakatime stats to google calender'
 author: 'hijiki51'
 inputs:
-  wakatime_api_key: # change this
+  wakatime-api-key:
     required: true
     description: 'wakatime api key'
+  google-credential:
+    required: true
+    description: 'google credential'
+  calendar-id:
+    required: true
+    description: 'google calendar id'
+  color-id:
+    required: true
+    description: 'google calendar color id'
 runs:
   using: 'node16'
   main: 'dist/index.js'
