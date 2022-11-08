@@ -21,23 +21,30 @@ async function run(): Promise<void> {
     const googleCredential: string = core.getInput('google-credential')
     const colorId: string = core.getInput('color-id')
     const calenderId: string = core.getInput('calender-id')
+    const projects = core.getMultilineInput('projects')
 
     const auth = authorize(googleCredential)
 
     await Promise.all(
-      durations.data.map(async duration => {
-        const start = fromUnixTime(duration.time)
-        const end = fromUnixTime(duration.time + duration.duration)
-
-        return insertToGcal(
-          auth,
-          calenderId,
-          colorId,
-          duration.project,
-          start,
-          end
+      durations.data
+        .filter(durs =>
+          projects.length === 0
+            ? true // if projects is empty, insert all projects
+            : projects.some(proj => proj === durs.project)
         )
-      })
+        .map(async duration => {
+          const start = fromUnixTime(duration.time)
+          const end = fromUnixTime(duration.time + duration.duration)
+
+          return insertToGcal(
+            auth,
+            calenderId,
+            colorId,
+            duration.project,
+            start,
+            end
+          )
+        })
     )
   } catch (error) {
     if (error instanceof Error) core.setFailed(error.message)

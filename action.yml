@@ -12,8 +12,9 @@ inputs:
     required: true
     description: 'google calendar id'
   color-id:
-    required: true
     description: 'google calendar color id'
+  projects: 
+    description: 'filter project names. if empty, all projects are exported'
 runs:
   using: 'node16'
   main: 'dist/index.js'
