@@ -32,7 +32,8 @@ export const insertToGcal = async (
     if (error instanceof Error)
       debug(
         `insert failed: ${JSON.stringify({
-          colorId,
+          len: colorId.length,
+          len2: calenderId.length,
           summary: title,
           start: {
             dateTime: formatRFC3339(start)
@@ -42,6 +43,7 @@ export const insertToGcal = async (
           }
         })}`
       )
+    throw new Error('insert failed')
   }
 }
 
