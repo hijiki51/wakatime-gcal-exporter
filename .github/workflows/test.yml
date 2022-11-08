@@ -16,7 +16,7 @@ jobs:
         with:
           node-version: 16
       - run: |
-          npm ci
+          npm ci --legacy-peer-deps
       - run: |
           npm run all
   test: # make sure the action works on a clean machine without building

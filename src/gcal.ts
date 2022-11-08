@@ -2,7 +2,6 @@ import {JSONClient} from 'google-auth-library/build/src/auth/googleauth'
 import {formatRFC3339} from 'date-fns'
 import {google} from 'googleapis'
 import {GoogleAuth} from 'google-auth-library'
-import {debug} from '@actions/core'
 
 export const insertToGcal = async (
   auth: GoogleAuth<JSONClient>,
@@ -29,22 +28,6 @@ export const insertToGcal = async (
       }
     })
   } catch (error) {
-    if (error instanceof Error) {
-      debug(
-        `insert failed: ${JSON.stringify({
-          len: colorId.length,
-          len2: calenderId.length,
-          summary: title,
-          start: {
-            dateTime: formatRFC3339(start)
-          },
-          end: {
-            dateTime: formatRFC3339(end)
-          }
-        })}`
-      )
-      debug(error.message)
-    }
     throw new Error(`insert failed`)
   }
 }
