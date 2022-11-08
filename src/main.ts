@@ -34,15 +34,9 @@ async function run(): Promise<void> {
             : projects.some(proj => proj === durs.project)
         )
         .map(async duration => {
-          const start = utcToZonedTime(
-            fromUnixTime(duration.time),
-            'Asia/Tokyo'
-          )
+          const start = fromUnixTime(duration.time)
 
-          const end = utcToZonedTime(
-            fromUnixTime(duration.time + duration.duration),
-            'Asia/Tokyo'
-          )
+          const end = fromUnixTime(duration.time + duration.duration)
 
           return insertToGcal(
             auth,
