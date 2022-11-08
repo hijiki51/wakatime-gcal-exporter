@@ -30,14 +30,21 @@ export const insertToGcal = async (
   })
 }
 
-export const authorize = (content: string): GoogleAuth<JSONClient> => {
+export const authorize = async (
+  content: string
+): Promise<GoogleAuth<JSONClient>> => {
   try {
     const credential = JSON.parse(content)
-    const client = google.auth.fromJSON(credential)
+    const client = new google.auth.JWT(
+      credential.client_email,
+      undefined,
+      credential.private_key,
+      ['https://www.googleapis.com/auth/calendar']
+    )
+    await client.authorize()
 
     return new GoogleAuth({
-      authClient: client,
-      scopes: ['https://www.googleapis.com/auth/calendar.events']
+      authClient: client
     })
   } catch (error) {
     throw new Error('Invalid credential json')

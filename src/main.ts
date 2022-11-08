@@ -23,7 +23,7 @@ async function run(): Promise<void> {
     const calenderId: string = core.getInput('calender-id')
     const projects = core.getMultilineInput('projects')
 
-    const auth = authorize(googleCredential)
+    const auth = await authorize(googleCredential)
 
     await Promise.all(
       durations.data
