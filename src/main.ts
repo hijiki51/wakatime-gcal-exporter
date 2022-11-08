@@ -24,6 +24,7 @@ async function run(): Promise<void> {
     const projects = core.getMultilineInput('projects')
 
     const auth = await authorize(googleCredential)
+    core.debug('Authorized')
 
     await Promise.all(
       durations.data
