@@ -5,9 +5,6 @@ inputs:
   wakatime-api-key:
     required: true
     description: 'wakatime api key'
-  wakatime-user-id:
-    required: true
-    description: 'wakatime user id'
   google-credential:
     required: true
     description: 'google credential'
