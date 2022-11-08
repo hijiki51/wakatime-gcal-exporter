@@ -30,6 +30,8 @@ jobs:
           calendar-id: ${{secrets.CALENDAR_ID}}
           color-id: 7
           projects: |
-            wakatime-google-exporter
             kadai
+            wakatime-google-exporter
+            wakatime-gcal-exporter
+            
 
