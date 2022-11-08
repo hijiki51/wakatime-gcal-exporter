@@ -30,5 +30,6 @@ jobs:
           calendar-id: ${{secrets.CALENDAR_ID}}
           color-id: ${{secrets.COLOR_ID}}
           projects: |
+            wakatime-google-exporter
             kadai
 

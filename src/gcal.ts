@@ -14,8 +14,6 @@ export const insertToGcal = async (
 ): Promise<void> => {
   try {
     const calender = google.calendar({version: 'v3', auth})
-    const startDate = formatRFC3339(start)
-    const endDate = formatRFC3339(end)
 
     await calender.events.insert({
       calendarId: calenderId,
@@ -23,15 +21,27 @@ export const insertToGcal = async (
         colorId,
         summary: title,
         start: {
-          dateTime: startDate
+          dateTime: formatRFC3339(start)
         },
         end: {
-          dateTime: endDate
+          dateTime: formatRFC3339(end)
         }
       }
     })
   } catch (error) {
-    if (error instanceof Error) debug(`insert failed: ${error.message}`)
+    if (error instanceof Error)
+      debug(
+        `insert failed: ${JSON.stringify({
+          colorId,
+          summary: title,
+          start: {
+            dateTime: formatRFC3339(start)
+          },
+          end: {
+            dateTime: formatRFC3339(end)
+          }
+        })}`
+      )
   }
 }
 
