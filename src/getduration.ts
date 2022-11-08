@@ -19,6 +19,8 @@ export const getDuration = async (
       }
     }
   )
+  debug(token)
+  debug(`https://wakatime.com/api/v1/users/current/durations?${param}`)
 
   const tp = await response.json()
 

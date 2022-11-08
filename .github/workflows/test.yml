@@ -26,7 +26,6 @@ jobs:
       - uses: ./
         with:
           wakatime-api-key: "{{secrets.WAKATIME_API_KEY}}"
-          wakatime-user-id: "{{secrets.WAKATIME_USER_ID}}"
           google-credential: "{{secrets.GOOGLE_CREDENTIAL}}"
           calendar-id: "{{secrets.CALENDAR_ID}}"
           color-id: "{{secrets.COLOR_ID}}"
