@@ -29,7 +29,7 @@ export const insertToGcal = async (
       }
     })
   } catch (error) {
-    if (error instanceof Error)
+    if (error instanceof Error) {
       debug(
         `insert failed: ${JSON.stringify({
           len: colorId.length,
@@ -43,7 +43,9 @@ export const insertToGcal = async (
           }
         })}`
       )
-    throw new Error('insert failed')
+      debug(error.message)
+    }
+    throw new Error(`insert failed`)
   }
 }
 
