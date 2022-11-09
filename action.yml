@@ -2,15 +2,12 @@ name: 'wakatime-gcal-exporter'
 description: 'Sync wakatime stats to google calender'
 author: 'hijiki51'
 inputs:
+  access_token:
+    description: 'Access token for Google Cloud'
+    required: true
   wakatime-api-key:
     required: true
     description: 'wakatime api key'
-  google-credential:
-    required: true
-    description: 'google credential'
-  event-creator-email:
-    required: true
-    description: 'event creator email'
   calendar-id:
     required: true
     description: 'google calendar id'

@@ -1,7 +1,7 @@
 import * as core from '@actions/core'
 import {fromUnixTime} from 'date-fns'
 import {utcToZonedTime} from 'date-fns-tz'
-import {authorize, insertToGcal} from './gcal'
+import {insertToGcal} from './gcal'
 import {getDuration} from './getduration'
 import {GetDurationsResponse} from './types/duration'
 
@@ -18,14 +18,10 @@ async function run(): Promise<void> {
       yesterday
     )
 
-    const googleCredential: string = core.getInput('google-credential')
-    const creatorEmail: string = core.getInput('event-creator-email')
     const colorId: string = core.getInput('color-id')
     const calenderId: string = core.getInput('calendar-id')
-    const projects = core.getMultilineInput('projects')
-
-    const auth = await authorize(googleCredential)
-    core.debug('Authorized')
+    const projects: string[] = core.getMultilineInput('projects')
+    const token: string = core.getInput('access_token')
 
     await Promise.all(
       durations.data
@@ -40,11 +36,10 @@ async function run(): Promise<void> {
           const end = fromUnixTime(duration.time + duration.duration)
 
           return insertToGcal(
-            auth,
+            token,
             calenderId,
             colorId,
             duration.project,
-            creatorEmail,
             start,
             end
           )
