@@ -8,6 +8,9 @@ inputs:
   google-credential:
     required: true
     description: 'google credential'
+  event-creator-email:
+    required: true
+    description: 'event creator email'
   calendar-id:
     required: true
     description: 'google calendar id'

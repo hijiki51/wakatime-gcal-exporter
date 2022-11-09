@@ -19,6 +19,7 @@ async function run(): Promise<void> {
     )
 
     const googleCredential: string = core.getInput('google-credential')
+    const creatorEmail: string = core.getInput('event-creator-email')
     const colorId: string = core.getInput('color-id')
     const calenderId: string = core.getInput('calendar-id')
     const projects = core.getMultilineInput('projects')
@@ -43,6 +44,7 @@ async function run(): Promise<void> {
             calenderId,
             colorId,
             duration.project,
+            creatorEmail,
             start,
             end
           )

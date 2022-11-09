@@ -8,6 +8,7 @@ export const insertToGcal = async (
   calenderId: string,
   colorId: string,
   title: string,
+  creator: string,
   start: Date,
   end: Date
 ): Promise<void> => {
@@ -19,6 +20,9 @@ export const insertToGcal = async (
       requestBody: {
         colorId,
         summary: title,
+        creator: {
+          email: creator
+        },
         start: {
           dateTime: formatRFC3339(start)
         },

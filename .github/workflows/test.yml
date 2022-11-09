@@ -27,6 +27,7 @@ jobs:
         with:
           wakatime-api-key: ${{secrets.WAKATIME_API_KEY}}
           google-credential: ${{secrets.GOOGLE_CREDENTIAL}}
+          event-creator-email: "test@example.com"
           calendar-id: ${{secrets.CALENDAR_ID}}
           color-id: 7
           projects: |
