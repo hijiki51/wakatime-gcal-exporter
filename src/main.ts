@@ -1,5 +1,5 @@
 import * as core from '@actions/core'
-import {fromUnixTime} from 'date-fns'
+import {formatISO, fromUnixTime} from 'date-fns'
 import {utcToZonedTime} from 'date-fns-tz'
 import {insertToGcal} from './gcal'
 import {getDuration} from './getduration'
@@ -13,6 +13,8 @@ async function run(): Promise<void> {
       return today
     })(utcToZonedTime(new Date(), 'Asia/Tokyo'))
 
+    core.info(`target date: ${formatISO(yesterday)}`)
+
     const durations: GetDurationsResponse = await getDuration(
       wakatimeAPIKey,
       yesterday
@@ -23,28 +25,32 @@ async function run(): Promise<void> {
     const projects: string[] = core.getMultilineInput('projects')
     const token: string = core.getInput('access_token')
 
-    await Promise.all(
-      durations.data
-        .filter(durs =>
-          projects.length === 0
-            ? true // if projects is empty, insert all projects
-            : projects.some(proj => proj === durs.project)
-        )
-        .map(async duration => {
-          const start = fromUnixTime(duration.time)
+    core.info(`Insert ${durations.data.length} events`)
 
-          const end = fromUnixTime(duration.time + duration.duration)
+    for await (const duration of durations.data.filter(durs =>
+      projects.length === 0
+        ? true // if projects is empty, insert all projects
+        : projects.some(proj => proj === durs.project)
+    )) {
+      const start = fromUnixTime(duration.time)
 
-          return insertToGcal(
-            token,
-            calenderId,
-            colorId,
-            duration.project,
-            start,
-            end
-          )
-        })
-    )
+      const end = fromUnixTime(duration.time + duration.duration)
+
+      await insertToGcal(
+        token,
+        calenderId,
+        colorId,
+        duration.project,
+        start,
+        end
+      )
+      // for rate limit
+      await new Promise<void>(resolve =>
+        setTimeout(() => {
+          resolve()
+        }, 500)
+      )
+    }
   } catch (error) {
     if (error instanceof Error) core.setFailed(error.message)
   }
