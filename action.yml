@@ -8,6 +8,9 @@ inputs:
   wakatime-api-key:
     required: true
     description: 'wakatime api key'
+  timezone:
+    description: 'timezone'
+    default: 'Asia/Tokyo'
   calendar-id:
     required: true
     description: 'google calendar id'

@@ -8,10 +8,12 @@ import {GetDurationsResponse} from './types/duration'
 async function run(): Promise<void> {
   try {
     const wakatimeAPIKey: string = core.getInput('wakatime-api-key')
+    const timeZone: string = ((input: string) =>
+      input === '' ? 'Asia/Tokyo' : input)(core.getInput('timezone'))
     const yesterday: Date = ((today: Date) => {
       today.setDate(today.getDate() - 1)
       return today
-    })(utcToZonedTime(new Date(), 'Asia/Tokyo'))
+    })(utcToZonedTime(new Date(), timeZone))
 
     core.info(`target date: ${formatISO(yesterday)}`)
 
