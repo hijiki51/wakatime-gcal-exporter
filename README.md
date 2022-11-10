@@ -20,6 +20,7 @@
     access_token: ${{ steps.auth.outputs.access_token }}
     wakatime-api-key: ${{secrets.WAKATIME_API_KEY}}
     calendar-id: ${{secrets.CALENDAR_ID}}
+    timezone: 'Asia/Tokyo' # optional, default: 'Asia/Tokyo'
     color-id: 7 # optional
     projects: | # optional
       project1

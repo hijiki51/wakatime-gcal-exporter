@@ -42,6 +42,7 @@ jobs:
           access_token: ${{ steps.auth.outputs.access_token }}
           wakatime-api-key: ${{secrets.WAKATIME_API_KEY}}
           calendar-id: ${{secrets.CALENDAR_ID}}
+          timezone: 'Asia/Tokyo'
           color-id: 7
           projects: |
             kadai
