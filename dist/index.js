@@ -22,7 +22,7 @@ Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.insertToGcal = void 0;
 const date_fns_1 = __nccwpck_require__(3314);
 const node_fetch_1 = __importDefault(__nccwpck_require__(4429));
-const insertToGcal = (access_token, calenderId, colorId, title, start, end) => __awaiter(void 0, void 0, void 0, function* () {
+const insertToGcal = (access_token, calenderId, colorId, title, start, end, description) => __awaiter(void 0, void 0, void 0, function* () {
     return (0, node_fetch_1.default)(`https://www.googleapis.com/calendar/v3/calendars/${calenderId}/events`, {
         method: 'POST',
         headers: {
@@ -31,6 +31,7 @@ const insertToGcal = (access_token, calenderId, colorId, title, start, end) => _
         body: JSON.stringify({
             colorId,
             summary: title,
+            description,
             start: {
                 dateTime: (0, date_fns_1.formatRFC3339)(start)
             },
@@ -162,6 +163,8 @@ function run() {
             })((0, date_fns_tz_1.utcToZonedTime)(new Date(), timeZone));
             core.info(`target date: ${(0, date_fns_1.formatISO)(yesterday)}`);
             const durations = yield (0, getduration_1.getDuration)(wakatimeAPIKey, yesterday);
+            const projPlace = core.getInput('project-name-place');
+            const titleOverride = core.getInput('title-override');
             const colorId = core.getInput('color-id');
             const calenderId = core.getInput('calendar-id');
             const projects = core.getMultilineInput('projects');
@@ -174,7 +177,9 @@ function run() {
                     const duration = _c.value;
                     const start = (0, date_fns_1.fromUnixTime)(duration.time);
                     const end = (0, date_fns_1.fromUnixTime)(duration.time + duration.duration);
-                    yield (0, gcal_1.insertToGcal)(token, calenderId, colorId, duration.project, start, end);
+                    const title = projPlace === 'title' ? duration.project : titleOverride;
+                    const description = projPlace === 'description' ? duration.project : '';
+                    yield (0, gcal_1.insertToGcal)(token, calenderId, colorId, title, start, end, description);
                     // for rate limit
                     yield new Promise(resolve => setTimeout(() => {
                         resolve();
