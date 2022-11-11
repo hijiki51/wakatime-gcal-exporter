@@ -21,6 +21,8 @@ async function run(): Promise<void> {
       wakatimeAPIKey,
       yesterday
     )
+    const projPlace = core.getInput('project-name-place')
+    const titleOverride = core.getInput('title-override')
 
     const colorId: string = core.getInput('color-id')
     const calenderId: string = core.getInput('calendar-id')
@@ -38,13 +40,17 @@ async function run(): Promise<void> {
 
       const end = fromUnixTime(duration.time + duration.duration)
 
+      const title = projPlace === 'title' ? duration.project : titleOverride
+      const description = projPlace === 'description' ? duration.project : ''
+
       await insertToGcal(
         token,
         calenderId,
         colorId,
-        duration.project,
+        title,
         start,
-        end
+        end,
+        description
       )
       // for rate limit
       await new Promise<void>(resolve =>

@@ -7,7 +7,8 @@ export const insertToGcal = async (
   colorId: string,
   title: string,
   start: Date,
-  end: Date
+  end: Date,
+  description?: string
 ): Promise<Response> =>
   fetch(
     `https://www.googleapis.com/calendar/v3/calendars/${calenderId}/events`,
@@ -19,6 +20,7 @@ export const insertToGcal = async (
       body: JSON.stringify({
         colorId,
         summary: title,
+        description,
         start: {
           dateTime: formatRFC3339(start)
         },

@@ -22,6 +22,8 @@
     calendar-id: ${{secrets.CALENDAR_ID}}
     timezone: 'Asia/Tokyo' # optional, default: 'Asia/Tokyo'
     color-id: 7 # optional
+    project-name-place: 'title' # optional, default: 'title', 'title' or 'description'
+    title-override: 'WakaTime' # optional
     projects: | # optional
       project1
       project2 
